@@ -18,10 +18,6 @@ makeBackup() {
 	fileMask=$2
 	backupDir=$3
 
-	printf "makeBackup parametrsssss: \n\n"
-	printf $1
-	printf $2
-	printf $3
 	dateNow=$(date +%Y-%m-%d-%T)
 	printf "\n\ndate now: ${dateNow} \n\n"
 	mkdir "${backupDir}/${dateNow}"
@@ -31,10 +27,8 @@ makeBackup() {
 	printf "По маске ${fileMask} \n\n"
 
 	if [ "${fileMask}" = "*" ] || [ "${fileMask}" = "*.*" ]; then
-		printf "\n\n копировать все файлы \n\n"
 		cp -rp ${mainDir}/* $dateDir
 	else
-		printf "\n\n Копировать будем не все\n\n"
 		cp -i $(find $mainDir -name ${fileMask}) $dateDir
 	fi
 }
