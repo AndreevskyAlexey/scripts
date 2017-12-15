@@ -30,7 +30,7 @@ makeBackup() {
 	printf "Будем копировать в: ${dateDir}  \n\n"
 	printf "По маске ${fileMask} \n\n"
 
-	if [ "${fileMask}" = "*" ]; then
+	if [ "${fileMask}" = "*" ] || [ "${fileMask}" = "*.*" ]; then
 		printf "\n\n копировать все файлы \n\n"
 		cp -rp ${mainDir}/* $dateDir
 	else
@@ -41,10 +41,6 @@ makeBackup() {
 
 # Функция для ввода да или нет
 yesOrNo() {
-       	if [ $1 ]; then
-		message=$1
-	fi
-
 	correct="false"
 	while [ $correct = "false" ]
 	do
@@ -61,7 +57,7 @@ yesOrNo() {
 }
 
 if [ ! $1 ]; then # проверка на наличие первого аргумента
-	printHelp
+	printf "Необходимо ввести параметры.\nДля получения справки воспользуйтесь --help"
 	exit 0
 else
 	case "$1" in
@@ -109,7 +105,6 @@ else
 		defaultDir="/home/${username}/backup"
 		printf $defaultDir
 		if [ ! -d $defaultDir ]; then # проверка на существование стандартной директории для бэкапа
-			printf "Была создана стандартная директория"
 			mkdir "/home/${username}/backup"
 		fi
 		backupDirection="/home/${username}/backup"
